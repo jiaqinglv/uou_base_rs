@@ -55,6 +55,6 @@ where
         conf,
         data: Some(data),
         servers: Some(servers),
-        logger: Some(logger)
+        logger: Some(logger),
     };
 }

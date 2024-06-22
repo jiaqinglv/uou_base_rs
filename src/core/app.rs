@@ -1,9 +1,4 @@
-use super::{
-    config::ServerConfig,
-    data::DataSource,
-    logs,
-    server::Servers,
-};
+use super::{config::ServerConfig, data::DataSource, logs, server::Servers};
 
 /// 服务器应用 C: 配置信息 S: 服务器 L: 日志
 pub struct App<C, D, S, L>
@@ -26,7 +21,7 @@ where
     // 数据源
     pub data: Option<D>,
 
-    pub logger: Option<L>
+    pub logger: Option<L>,
 }
 
 /// 应用信息
@@ -49,8 +44,12 @@ where
     }
 
     /// 日志初始化
-    pub fn init_opentelemetry_log(self, level: log::Level) -> Result<Self, Box<dyn std::error::Error>> {
-        logs::DefaultLogger::new_tracing_opentelemetry_jaeger(level, self.name.clone()).expect("init opentelemetry log error");
+    pub fn init_opentelemetry_log(
+        self,
+        level: log::Level,
+    ) -> Result<Self, Box<dyn std::error::Error>> {
+        logs::DefaultLogger::new_tracing_opentelemetry_jaeger(level, self.name.clone())
+            .expect("init opentelemetry log error");
         return Ok(self);
     }
 }
