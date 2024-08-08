@@ -32,23 +32,20 @@ where
     S: Servers + Send + Sync,
     L: logs::Logger + Send + Sync,
 {
-    pub fn default_log(self, level: log::Level) -> Result<Self, Box<dyn std::error::Error>> {
+    pub fn default_log(self, level: tracing::Level) -> Result<Self, Box<dyn std::error::Error>> {
         logs::new_default_log(level).expect("init default log error");
         return Ok(self);
     }
 
     /// 日志初始化
-    pub fn init_log(self, level: log::Level) -> Result<Self, Box<dyn std::error::Error>> {
+    pub fn init_log(self, level: tracing::Level) -> Result<Self, Box<dyn std::error::Error>> {
         logs::new_default_log(level).expect("init default log error");
         return Ok(self);
     }
 
     /// 日志初始化
-    pub fn init_opentelemetry_log(
-        self,
-        level: log::Level,
-    ) -> Result<Self, Box<dyn std::error::Error>> {
-        logs::DefaultLogger::new_tracing_opentelemetry_jaeger(level, self.name.clone())
+    pub fn init_opentelemetry_log(self) -> Result<Self, Box<dyn std::error::Error>> {
+        logs::DefaultLogger::new_tracing_opentelemetry(self.name.clone())
             .expect("init opentelemetry log error");
         return Ok(self);
     }

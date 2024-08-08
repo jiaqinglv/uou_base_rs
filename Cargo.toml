@@ -5,8 +5,8 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [build-dependencies]
-tonic-build = "0.11"
-prost-build = "0.12"
+tonic-build = "0.12"
+prost-build = "0.13"
 
 
 [dependencies]
@@ -21,11 +21,11 @@ hyper = {version = "1", features = ["full"]}
 
 # 日志
 tracing = "0.1"
-opentelemetry = { version = "0.23", default-features = false, features = ["trace", "logs"] }
-opentelemetry-otlp = "0.16" # or the latest version
+opentelemetry = { version = "0.24", default-features = false, features = ["trace", "logs"] }
+opentelemetry-otlp = "0.17" # or the latest version
 tracing-subscriber = { version = "0.3.17" }
-tracing-opentelemetry = "0.24.0"
-opentelemetry-stdout = {version = "0.4.0", features = [           
+tracing-opentelemetry = "0.25.0"
+opentelemetry-stdout = {version = "0.5", features = [           
     "async-trait",
    "futures-util",
    "logs",
@@ -33,8 +33,8 @@ opentelemetry-stdout = {version = "0.4.0", features = [
    "thiserror",
    "trace"
 ]}
-opentelemetry-appender-log = {version = "0.4", default-features = false}
-opentelemetry_sdk = {version = "0.23", features=["logs", "rt-tokio"]}
+opentelemetry-appender-log = {version = "0.5", default-features = false}
+opentelemetry_sdk = {version = "0.24", features=["logs", "rt-tokio"]}
 
 
 tower-http = { version = "0.5", features = ["fs", "trace"] }
@@ -43,20 +43,19 @@ tower-layer = "0.3.2"
 
 
 # grpc 生成
-prost = "0.12"
-prost-types = "0.12"
+prost = "0.13"
+prost-types = "0.13"
 
 # GRPC Toic GRPC服务
-tonic = "0.11"
+tonic = "0.12"
 http-body = "1"
 http = "1"
 tower = "0.4.13"
 futures = "0.3.28"
-tonic-reflection = "0.11"
-sqlx = { version = "0.7", features = [ "runtime-tokio-rustls", "postgres", "macros", "uuid", "chrono"] }
+tonic-reflection = "0.12"
+sqlx = { version = "0.8", features = [ "runtime-tokio-rustls", "postgres", "macros", "uuid", "chrono"] }
 chrono = {version = "0.4.24", features = ["serde"]}
-log = "0.4.20"
-opentelemetry-jaeger = {version = "0.22", features =["isahc_collector_client", "collector_client"]}
+opentelemetry-appender-tracing = "0.5.0"
 
 
 
