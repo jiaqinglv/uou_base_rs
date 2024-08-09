@@ -1,6 +1,6 @@
 [package]
 name = "kratos_rs"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -21,10 +21,11 @@ hyper = {version = "1", features = ["full"]}
 
 # 日志
 tracing = "0.1"
+tracing-subscriber = { version = "0.3" }
+tracing-opentelemetry = "0.25"
+
 opentelemetry = { version = "0.24", default-features = false, features = ["trace", "logs"] }
-opentelemetry-otlp = "0.17" # or the latest version
-tracing-subscriber = { version = "0.3.17" }
-tracing-opentelemetry = "0.25.0"
+opentelemetry-otlp = {version = "0.17", features = ["tonic"]} # or the latest version
 opentelemetry-stdout = {version = "0.5", features = [           
     "async-trait",
    "futures-util",
@@ -33,13 +34,10 @@ opentelemetry-stdout = {version = "0.5", features = [
    "thiserror",
    "trace"
 ]}
-opentelemetry-appender-log = {version = "0.5", default-features = false}
-opentelemetry_sdk = {version = "0.24", features=["logs", "rt-tokio"]}
+opentelemetry_sdk = {version = "0.24", features=["trace", "logs", "rt-tokio"]}
+opentelemetry-appender-tracing = "0.5.0"
 
 
-tower-http = { version = "0.5", features = ["fs", "trace"] }
-tower-service = "0.3.2"
-tower-layer = "0.3.2"
 
 
 # grpc 生成
@@ -50,12 +48,18 @@ prost-types = "0.13"
 tonic = "0.12"
 http-body = "1"
 http = "1"
+
 tower = "0.4.13"
+tower-http = { version = "0.5", features = ["fs", "trace"] }
+tower-service = "0.3.2"
+tower-layer = "0.3.2"
+
 futures = "0.3.28"
 tonic-reflection = "0.12"
 sqlx = { version = "0.8", features = [ "runtime-tokio-rustls", "postgres", "macros", "uuid", "chrono"] }
 chrono = {version = "0.4.24", features = ["serde"]}
-opentelemetry-appender-tracing = "0.5.0"
+opentelemetry-semantic-conventions = "0.16.0"
+
 
 
 

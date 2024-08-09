@@ -1,3 +1,5 @@
+use opentelemetry_otlp::WithExportConfig;
+use opentelemetry_sdk::{runtime, Resource};
 use std::error::Error;
 use tracing::Level;
 use tracing::Level as TraceLevel;
@@ -26,12 +28,12 @@ impl Logger for DefaultLogger {
 }
 
 impl DefaultLogger {
-    /// opentelemetry
-    pub fn new_tracing_opentelemetry(tracer_name: String) -> Result<(), Box<dyn Error>> {
+    /// new_tracing_opentelemetry
+    pub fn new_tracing_opentelemetry_log(tracer_name: String) -> Result<(), Box<dyn Error>> {
         let exporter = opentelemetry_stdout::LogExporterBuilder::default().build();
 
         let logger_provider = opentelemetry_sdk::logs::LoggerProvider::builder()
-            // .with_config(opentelemetry_sdk::logs::Config::default()
+            // .with_config(opentelemetry_sdk::logs::Config::default())
             .with_resource(opentelemetry_sdk::Resource::new(vec![KeyValue::new(
                 "service.name",
                 tracer_name,
@@ -43,6 +45,35 @@ impl DefaultLogger {
         tracing_subscriber::registry()
             .with(otel_log_appender)
             .init();
+
+        Ok(())
+    }
+
+    /// new_jaeger_opentelemetry
+    pub fn new_jaeger_opentelemetry_log(
+        tracer_name: String,
+        endpoint: String,
+    ) -> Result<(), Box<dyn Error>> {
+        let tracer_provider = opentelemetry_otlp::new_pipeline()
+            .tracing()
+            .with_exporter(
+                opentelemetry_otlp::new_exporter()
+                    .tonic()
+                    .with_endpoint(endpoint),
+            )
+            .with_trace_config(opentelemetry_sdk::trace::Config::default().with_resource(
+                Resource::new(vec![KeyValue::new(
+                    opentelemetry_semantic_conventions::resource::SERVICE_NAME,
+                    tracer_name.clone(),
+                )]),
+            ))
+            .install_batch(runtime::Tokio)
+            .unwrap();
+
+        opentelemetry::global::set_tracer_provider(tracer_provider.clone());
+
+        let tracer_name_static = format!("{}", tracer_name);
+        opentelemetry::global::tracer(tracer_name_static);
 
         Ok(())
     }
