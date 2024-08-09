@@ -28,9 +28,7 @@ where
 
 /// 服务器配置文件-必须要有一个默认配置,方便错误时使用
 pub trait ServerConfig: DeserializeOwned {
-    fn default() -> Self
-    where
-        Self: Sized + Sync;
+    fn default() -> Self;
 }
 
 /// 配置信息
