@@ -45,7 +45,7 @@ where
 
     /// 日志初始化
     pub fn init_opentelemetry_log(self) -> Result<Self, Box<dyn std::error::Error>> {
-        logs::DefaultLogger::new_tracing_opentelemetry_log(self.name.clone())
+        logs::DefaultLogger::new_tracing_opentelemetry(self.name.clone())
             .expect("init opentelemetry log error");
         return Ok(self);
     }

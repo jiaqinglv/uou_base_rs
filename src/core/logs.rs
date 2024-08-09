@@ -29,7 +29,7 @@ impl Logger for DefaultLogger {
 
 impl DefaultLogger {
     /// new_tracing_opentelemetry
-    pub fn new_tracing_opentelemetry_log(tracer_name: String) -> Result<(), Box<dyn Error>> {
+    pub fn new_tracing_opentelemetry(tracer_name: String) -> Result<(), Box<dyn Error>> {
         let exporter = opentelemetry_stdout::LogExporterBuilder::default().build();
 
         let logger_provider = opentelemetry_sdk::logs::LoggerProvider::builder()
